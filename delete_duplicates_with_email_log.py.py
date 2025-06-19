@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-def SendMail(log_filename):
+def SendMail(log_filename,files_data):
 
     print("Sending email...")
     
@@ -21,9 +21,14 @@ def SendMail(log_filename):
 
     msg['From'] = from_address
     msg['To'] = to_address
-    msg['Subject'] = "Delete Duplicate Files Log-file"
+    msg['Subject'] = "Delete Duplicate Files"
 
-    body = "This is a log file of python script scheduled to delete duplicate files"
+    body =(
+    "Starting time of scanning : %s \n"
+    "Total number of files scanned : %s \n"
+    "Total number of duplicate files found : %s \n"
+    "This is a log file of python script scheduled to delete duplicate files \n"
+    )%(files_data[0],files_data[1],files_data[2])
 
     msg.attach(MIMEText(body, 'plain'))
 
@@ -51,7 +56,7 @@ def SendMail(log_filename):
     print("Email sent successfully")
 
 
-def CreateLog(FolderName, Data):
+def CreateLog(FolderName, Data,files_data):
 
     flag = os.path.isabs(FolderName)
     if(flag == False):
@@ -89,7 +94,8 @@ def CreateLog(FolderName, Data):
 
     fobj.close()
 
-    SendMail(filename)
+    files_data.append(len(Data))
+    SendMail(filename,files_data)
 
 def CalculateCheckSum(path,BlockSize = 1024):
     fobj = open(path,'rb')
@@ -123,12 +129,15 @@ def FindDuplicate(DirectoryName):
     if (flag == False):
         print("Path is valid but target is not a directory")
         exit()
-
+    files_data = []
+    files_data.append(time.ctime())
+    count = 0
     Duplicate = {}
 
     for FolderName, SubFolderNames, FileNames in os.walk(DirectoryName) :
         
         for fname in FileNames:
+            count += 1
             fname = os.path.join(FolderName,fname)
             checksum = CalculateCheckSum(fname)
 
@@ -137,12 +146,14 @@ def FindDuplicate(DirectoryName):
 
             else:
                 Duplicate[checksum] = [fname]
+    
+    files_data.append(count)
 
-    return Duplicate
+    return Duplicate , files_data
             
 def DeleteDuplicate(path):
 
-    MyDict = FindDuplicate(path)
+    MyDict, files_data = FindDuplicate(path)
     Result = list(filter(lambda x : len(x) > 1, MyDict.values()))
 
     Count = 0
@@ -162,7 +173,7 @@ def DeleteDuplicate(path):
 
     print("Total deleted files : ",Cnt)
 
-    CreateLog(path,log_data)
+    CreateLog(path,log_data,files_data)
     
 def main():
 
