@@ -87,7 +87,7 @@ This file is created at <timestamp>
 --------------------------------------------------------------------------------
 ```
 
-## 📧 Email Report Format
+## Email Report Format
 
 Subject: `Delete Duplicate Files`  
 Body includes:
@@ -128,7 +128,7 @@ To contribute:
 
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for more info.
 
