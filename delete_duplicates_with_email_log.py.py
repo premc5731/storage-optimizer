@@ -8,6 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+from dotenv import load_dotenv
 
 def SendMail(log_filename,files_data):
 
@@ -15,7 +16,8 @@ def SendMail(log_filename,files_data):
     
     from_address = "ajay194703@gmail.com"
     to_address = sys.argv[3]
-    password = "lcomjjnktdfuyiqi"
+    load_dotenv()
+    password = os.getenv("EMAIL_PASSWORD")
     
     msg = MIMEMultipart()
 
