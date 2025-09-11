@@ -9,6 +9,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 from dotenv import load_dotenv
+from S3_upload import upload_file_to_s3
 
 def SendMail(log_filename,files_data):
 
@@ -98,6 +99,10 @@ def CreateLog(FolderName, Data,files_data):
 
     files_data.append(len(Data))
     SendMail(filename,files_data)
+
+    object_name = f'logs/Delete_Duplicate_Files_Log{timestamp}.log'
+    upload_file_to_s3(filename,'delete-duplicate-files',object_name)
+
 
 def CalculateCheckSum(path,BlockSize = 1024):
     fobj = open(path,'rb')
