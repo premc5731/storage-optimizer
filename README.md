@@ -1,5 +1,6 @@
 
-# Delete Duplicate Files & Email Log Automation
+# Storage-Optimizer - Duplicate File Management Utility
+
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue.svg)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey)
@@ -34,8 +35,8 @@
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/duplicate-file-cleaner.git
-cd duplicate-file-cleaner
+git clone https://github.com/premc5731/storage-optimizer.git
+cd storage-optimizer
 pip install schedule
 ```
 
@@ -137,13 +138,6 @@ This project is licensed under the **MIT License**. See [LICENSE](LICENSE) for m
 ## Acknowledgements
 
 Special thanks to Python’s core modules and the open-source community.
-
----
-
-## Author
-
-**Prem Choudhary**  
-[GitHub](https://github.com/yourusername) • [LinkedIn](https://linkedin.com/in/your-profile)
 
 ---
 
